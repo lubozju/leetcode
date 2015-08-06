@@ -34,3 +34,26 @@ public class Solution {
         }
     }
 }
+
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == p || root == q || root == null) {
+            return root;
+        }
+        while (root != p && root != q) {
+            if (root.val > p.val) {
+                if (root.val < q.val) {
+                    return root;
+                }
+                root = root.left;
+            } else {
+                if (root.val > q.val) {
+                    return root;
+                }
+                root = root.right;
+            }
+        }
+        
+        return root;
+    }
+}
