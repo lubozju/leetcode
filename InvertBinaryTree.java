@@ -38,3 +38,30 @@ public class Solution {
         return root;
     }
 }
+
+public class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        
+        if (root != null) {
+            queue.add(root);
+        }
+        
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.remove();
+            TreeNode left = node.left;
+            node.left = node.right;
+            node.right = left;
+            
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+        
+        return root;
+    }
+}
