@@ -17,27 +17,25 @@ A faster approach is to use extra space.
 
 public class Solution {
     public int hIndex(int[] citations) {
-        Arrays.sort(citations);
+        int length = citations.length;
+        int[] count = new int[length + 1];
         
-        int n = citations.length;
-        
-        int left = 0; 
-        int right = n - 1;
-        
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            
-            if (citations[mid] == n - mid) {
-                return citations[mid];
-            }
-            if (citations[mid] > n - mid) {
-                right = mid - 1;
+        for (int citation : citations) {
+            if (citation >= length) {
+                count[length]++;
             } else {
-                left = mid + 1;
+                count[citation]++;
             }
-            
         }
         
-        return n - left;
+        int sum = 0;
+        for (int i = length; i >= 1; i--) {
+            sum += count[i];
+            if (sum >= i) {
+                return i;
+            }
+        }
+        
+        return 0;
     }
 }
