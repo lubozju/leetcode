@@ -11,3 +11,18 @@ For example:
     27 -> AA
     28 -> AB 
 */
+
+public class Solution {
+    public String convertToTitle(int n) {
+        StringBuilder sb = new StringBuilder();
+        int div = (n - 1) / 26;
+        sb.append((char)('A' + (n - 1) % 26));
+        while (div != 0) {
+            int temp = (div - 1) / 26;
+            sb.append((char)('A' + (div - 1) % 26));
+            div = temp;
+        }
+        
+        return sb.reverse().toString();
+    }
+}
