@@ -42,28 +42,17 @@ public class Solution {
         if (root == null) {
             return;
         }
-        Queue<TreeLinkNode> queue = new LinkedList<TreeLinkNode>();
-        
-        queue.add(root);
-        queue.add(root.next);
-        TreeLinkNode cur = null;
-        while (!queue.isEmpty()) {
-            TreeLinkNode node = queue.poll();
-            if (node == null) {
-                cur = null;
-                queue.add(null);
-            } else {
-                if (cur != null) {
-                    cur.next = node.left;
+
+        while (root.left != null) {
+            TreeLinkNode cur = root;
+            while (cur != null) {
+                cur.left.next = cur.right;
+                if(cur.next != null) {
+                    cur.right.next = cur.next.left;
                 }
-                if (node.left == node.right) {
-                    return;
-                }
-                cur = node.right;
-                node.left.next = node.right;
-                queue.add(node.left);
-                queue.add(node.right);
+                cur = cur.next;
             }
+            root = root.left;
         }
     }
 }
