@@ -1,4 +1,5 @@
-/*Invert a binary tree.
+/*
+Invert a binary tree.
 
      4
    /   \
@@ -28,40 +29,54 @@ public class Solution {
             return root;
         }
         
-        TreeNode leftRoot = invertTree(root.left);
-        
-        TreeNode rightRoot = invertTree(root.right);
-        
-        root.left = rightRoot;
-        root.right = leftRoot;
-        
+        TreeNode newLeft = invertTree(root.right);
+        TreeNode newRight = invertTree(root.left);
+        root.left = newLeft;
+        root.right = newRight;
         return root;
     }
 }
 
 public class Solution {
     public TreeNode invertTree(TreeNode root) {
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        
+        Queue<TreeNode> queue = new LinkedList<>();
         if (root != null) {
             queue.add(root);
         }
-        
         while (!queue.isEmpty()) {
-            TreeNode node = queue.remove();
-            TreeNode left = node.left;
+            TreeNode node = queue.poll();
+            TreeNode temp = node.left;
             node.left = node.right;
-            node.right = left;
-            
+            node.right = temp;
             if (node.left != null) {
                 queue.add(node.left);
             }
-            
             if (node.right != null) {
                 queue.add(node.right);
             }
         }
-        
+        return root;
+    }
+}
+
+public class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        if (root != null) {
+            stack.push(root);
+        }
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+        }
         return root;
     }
 }
