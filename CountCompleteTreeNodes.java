@@ -19,32 +19,19 @@ public class Solution {
         if (root == null) {
             return 0;
         }
-        int level = countLevel(root);
-        if (level == 0) {
-            return 1;
-        }
+        int leftHeight = getHeight(root.left);
+        int rightHeight = getHeight(root.right);
+        if (leftHeight == rightHeight) {
+            return (1 << leftHeight) + countNodes(root.right);
+        } 
+        return countNodes(root.left) + (1 << (leftHeight - 1));
         
-        if (countLevel(root.right) == level - 1) {
-            return countNodes(root.right) + (1 << level);
-        } else {
-            return countNodes(root.left) + (1 << (level - 1));
-        }
     }
-    
-    // private boolean isFull(TreeNode root, int level) {
-    //     while (root != null) {
-    //         root = root.right;
-    //         level--;
-    //     }
-    //     return level == -1;
-    // }
-    
-    // left path
-    private int countLevel(TreeNode root) {
-        int count = -1;
+    private int getHeight(TreeNode root) {
+        int count = 0;
         while (root != null) {
-            root = root.left;
             count++;
+            root = root.left;
         }
         return count;
     }
