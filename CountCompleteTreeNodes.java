@@ -36,3 +36,33 @@ public class Solution {
         return count;
     }
 }
+
+public class Solution {
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int result = 0;
+        int LeftHeight = getHeight(root.left);
+        while (root != null) {
+            int rightHeight = getHeight(root.right);
+            if (LeftHeight == rightHeight) {
+                result += (1 << LeftHeight);
+                root = root.right;
+            } else {
+                result += (1 << (LeftHeight - 1));
+                root = root.left;
+            }
+            LeftHeight--;
+        }
+        return result;
+    }
+    private int getHeight(TreeNode root) {
+        int count = 0;
+        while (root != null) {
+            count++;
+            root = root.left;
+        }
+        return count;
+    }
+}
