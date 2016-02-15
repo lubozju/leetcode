@@ -22,36 +22,27 @@ You should return [1, 3, 4].
  */
 public class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        int sizePerLayer = 0;
-        int tempSize = 0;
         List<Integer> result = new ArrayList<Integer>();
+        if (root == null) {
+            return result;
+        }
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        
-        if (root != null) {
-            queue.offer(root);
-            sizePerLayer = 1;
-        }
-        
+        queue.add(root);
         while (!queue.isEmpty()) {
-            TreeNode curNode = queue.poll();
-
-            if (curNode.left != null) {
-                queue.offer(curNode.left);
-                tempSize++;
-            }
-            if (curNode.right != null) {
-                queue.offer(curNode.right);
-                tempSize++;
-            }
-            // need to update the child queue before updating the sizePerLayer
-            sizePerLayer--;
-            if (sizePerLayer == 0) {
-                result.add(curNode.val);
-                sizePerLayer = tempSize;
-                tempSize = 0;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (i == 0) {
+                    result.add(node.val);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
             }
         }
-        
         return result;
     }
 }
