@@ -7,6 +7,9 @@ s = "rat", t = "car", return false.
 
 Note:
 You may assume the string contains only lowercase alphabets.
+
+Follow up:
+What if the inputs contain unicode characters? How would you adapt your solution to such case?
 */
 
 public class Solution {
@@ -14,52 +17,50 @@ public class Solution {
         if (s.length() != t.length()) {
             return false;
         }
-        
-        char[] sArray = s.toCharArray();
-        char[] tArray = t.toCharArray();
-        
-        Arrays.sort(sArray);
-        Arrays.sort(tArray);
-        
-        s = new String(sArray);
-        t = new String(tArray);
-        return s.equals(t);
+        int[] count = new int[26];
+        for (char cs : s.toCharArray()) {
+            count[cs - 'a']++;
+        }
+        for (char ct : t.toCharArray()) {
+            count[ct - 'a']--;
+            if (count[ct - 'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
-
 public class Solution {
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
             return false;
         }
-        
-        Map<Character, Integer> map = new HashMap<>();
-        
-        char[] sArray = s.toCharArray();
-        
-        for (char c : sArray) {
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) + 1);
+        Map<Character, Integer> count = new HashMap<Character, Integer>();
+        for (char cs : s.toCharArray()) {
+            if (count.get(cs) == null) {
+                count.put(cs, 1);
             } else {
-                map.put(c, 1);
+                count.put(cs, count.get(cs) + 1);
             }
         }
         
-        char[] tArray = t.toCharArray();
-        
-        for (char c : tArray) {
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) - 1);
-            } else {
+        for (char ct : t.toCharArray()) {
+            if (count.get(ct) == null || count.get(ct) == 0) {
                 return false;
             }
-            
-            if (map.get(c) == 0) {
-                map.remove(c);
-            }
+            count.put(ct, count.get(ct) - 1);
         }
-        
-        return map.isEmpty();
+        return true;
     }
 }
-
+public class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] sc = s.toCharArray();
+        char[] tc = t.toCharArray();
+        
+        Arrays.sort(sc);
+        Arrays.sort(tc);
+        
+        return Arrays.equals(sc, tc);
+    }
+}ß
