@@ -14,38 +14,26 @@ You may assume pattern contains only lowercase letters, and str contains lowerca
 
 public class Solution {
     public boolean wordPattern(String pattern, String str) {
-        String[] words = str.split("\\s");
+        String[] words = str.split(" ");
+        char[] letters = pattern.toCharArray();
         
-        char[] charArray = pattern.toCharArray();
-        
-        if (words.length != charArray.length) {
+        if (words.length != letters.length) {
             return false;
         }
         
-        Map<String, Character> map1 = new HashMap<String, Character>();
-        Map<Character, String> map2 = new HashMap<Character, String>();
+        String[] lToWord = new String[26];
+        Map<String, Character> wordToL = new HashMap<String, Character>();
         
-        for (int i = 0; i < words.length; i++) {
-            Character c = map1.get(words[i]);
-            String word = map2.get(charArray[i]);
-            if (c == null) {
-                map1.put(words[i], charArray[i]);
-            } else {
-                if (c != charArray[i]) {
-                    return false;
-                }
+        for (int i = 0; i < letters.length; i++) {
+            if(lToWord[letters[i] - 'a'] != null && !lToWord[letters[i] - 'a'].equals(words[i])) {
+                return false;
             }
-            
-            if (word == null) {
-                map2.put(charArray[i], words[i]);
-            } else {
-                if (!word.equals(words[i])) {
-                    return false;
-                }
+            if (wordToL.get(words[i]) != null && wordToL.get(words[i]) != letters[i]) {
+                return false;
             }
+            lToWord[letters[i] - 'a'] = words[i];
+            wordToL.put(words[i], letters[i]);
         }
-        
         return true;
-        
     }
 }
