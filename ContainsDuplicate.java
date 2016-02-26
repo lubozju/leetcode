@@ -4,38 +4,24 @@ Given an array of integers, find if the array contains any duplicates. Your func
 
 public class Solution {
     public boolean containsDuplicate(int[] nums) {
-        if (nums == null) {
-            return false;
-        }
-        
-        Set<Integer> numSet = new HashSet<Integer>();
-        
-        for (int num : nums) {
-            if (numSet.contains(num)) {
+        Arrays.sort(nums);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i - 1] == nums[i]) {
                 return true;
             }
-            numSet.add(num);
         }
-        
         return false;
     }
 }
 
-
 public class Solution {
     public boolean containsDuplicate(int[] nums) {
-        if (nums == null) {
-            return false;
-        }
-        
-        Arrays.sort(nums);
-        
-        for(int i = 0; i < nums.length - 1; i++) {
-            if (nums[i] == nums[i + 1]) {
+        Set<Integer> set = new HashSet<Integer>();
+        for (int num : nums) {
+            if (!set.add(num)) {
                 return true;
             }
         }
-        
         return false;
     }
 }
