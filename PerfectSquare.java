@@ -32,3 +32,29 @@ public class Solution {
         return result[n];
     }
 }
+
+public class Solution {
+    public int numSquares(int n) {
+        Deque<Integer> queue = new LinkedList<Integer>();
+        
+        Set<Integer> visited = new HashSet<Integer>();
+        int level = 1;
+        queue.add(n);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int k = 0; k < size; k++) {
+                Integer num = queue.poll();
+                for (int i = 1; i * i <= num; i++) {
+                    if (i * i == num) {
+                        return level;
+                    }
+                    if (visited.add(num - i * i)) {
+                        queue.add(num - i * i);
+                    }
+                }
+            }
+            level++;
+        }
+        return n;
+    }
+}
