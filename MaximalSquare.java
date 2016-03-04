@@ -33,3 +33,33 @@ public class Solution {
         return result * result;
     }
 }
+
+public class Solution {
+    public int maximalSquare(char[][] matrix) {
+        if (matrix.length == 0) {
+            return 0;
+        }
+        int[] dp = new int[matrix.length + 1];
+        
+        int result = 0;
+        int pre = 0; // pre = dp[i - 1][j - 1]
+        for (int j = 0; j < matrix[0].length; j++) {
+            for (int i = 1; i < matrix.length + 1; i++) {
+                int temp = dp[i];
+                if (matrix[i - 1][j] == '1') {
+                    dp[i] = Math.min(Math.min(dp[i - 1], pre), dp[i]) + 1;
+                    if (result < dp[i]) {
+                        result = dp[i];
+                    }
+                }
+                // remember to update dp even if matrix[i - 1][j] == '0'
+                else {
+                    dp[i] = 0;
+                }
+                pre = temp;
+            }
+        }
+        
+        return result * result;
+    }
+}
