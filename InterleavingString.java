@@ -12,57 +12,39 @@ When s3 = "aadbbbaccc", return false.
 
 public class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
-        return help(s1, s2, s3, new HashMap<List<String>, Boolean>());
-    }
-    
-    private boolean help(String s1, String s2, String s3, Map<List<String>, Boolean> map) {
-        List<String> temp = new ArrayList<String>();
-        if (s1.compareTo(s2) < 0) {
-            temp.add(s1);
-            temp.add(s2);
-        } else {
-            temp.add(s2);
-            temp.add(s1);
-        }
-        temp.add(s3);
-        
-        if (map.containsKey(temp)) {
-            return map.get(temp);
-        }
-        
-        if (s3.length() != s1.length() + s2.length()) {
+        if (s1.length() + s2.length() != s3.length()) {
             return false;
         }
-        
-        if (s1.length() == 0) {
-            return s2.equals(s3);
+        if (s3.length() == 0) {
+            return true;
         }
+        boolean[][] dp = new boolean[s1.length() + 1][s2.length() + 1];
+        dp[0][0] = true;
         
-        if (s2.length() == 0) {
-            return s1.equals(s3);
-        }
-        
-        char c3 = s3.charAt(0);
-        char c1 = s1.charAt(0);
-        char c2 = s2.charAt(0);
-        
-        if (c3 != c1 && c3 != c2) {
-            return false;
-        }
-        if (c3 == c1) {
-            if (help(s1.substring(1), s2, s3.substring(1), map)) {
-                map.put(temp, true);
-                return true;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) == s3.charAt(i)) {
+                dp[i + 1][0] = dp[i][0];
             }
         }
-        if (c3 == c2) {
-            if (help(s1, s2.substring(1), s3.substring(1), map)) {
-                map.put(temp, true);
-                return true;
+        
+        for (int i = 0; i < s2.length(); i++) {
+            if (s2.charAt(i) == s3.charAt(i)) {
+                dp[0][i + 1] = dp[0][i];
             }
         }
-        map.put(temp, false);
-        return false;
+
+        for (int i = 1; i < s1.length() + 1; i++) {
+            for (int j = 1; j < s2.length() + 1; j++) {
+                int k = i + j - 1;
+                if (s1.charAt(i - 1) == s3.charAt(k)) {
+                    dp[i][j] = dp[i - 1][j];
+                }
+                if (s2.charAt(j - 1) == s3.charAt(k)) {
+                    dp[i][j] = dp[i][j] || dp[i][j - 1];
+                }
+            }
+        }
         
+        return dp[s1.length()][s2.length()];
     }
 }
