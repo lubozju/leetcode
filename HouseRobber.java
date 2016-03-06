@@ -39,3 +39,40 @@ public class Solution {
         return help[0][length - 1];
     }
 }
+
+public class Solution {
+    public int rob(int[] nums) {
+        int result = 0;
+        int[] dp = new int[nums.length];
+        
+        if (nums.length > 0) {
+            dp[0] = nums[0];
+            result = Math.max(result, dp[0]);
+        }
+        if (nums.length > 1) {
+            dp[1] = nums[1];
+            result = Math.max(result, dp[1]);
+        }
+        
+        for (int i = 2; i < nums.length; i++) {
+            dp[i] = nums[i] + ((i - 3 >= 0) ? Math.max(dp[i - 2], dp[i - 3]) : dp[i - 2]); 
+            result = Math.max(result, dp[i]);
+        }
+        
+        return result;
+    }
+}
+
+public class Solution {
+    public int rob(int[] nums) {
+        int rob = 0;
+        int notRob = 0;
+        
+        for (int i = 0; i < nums.length; i++) {
+            int temp = rob;
+            rob = nums[i] + notRob;
+            notRob = Math.max(notRob, temp);
+        }
+        return Math.max(rob, notRob);
+    }
+}
