@@ -11,23 +11,21 @@ Return 3.
 
 public class Solution {
     public int numDistinct(String s, String t) {
-        int[] help = new int[t.length() + 1];
-        for (int i = 1; i < s.length() + 1; i++) {
-            int pre = 1;
-            for (int j = 1; j < t.length() + 1; j++) {
-                char sc = s.charAt(i - 1);
-                char tc = t.charAt(j - 1);
-                 if (sc != tc) {
-                    help[j] = help[j];
-                    pre = help[j];
-                } else {
-                    int temp = help[j];
-                    help[j] = help[j] + pre;
-                    pre = temp;
-                }
-            }
+        int[] dp = new int[t.length() + 1];
+        for (int i = 0; i < dp.length; i++) {
+            dp[0]  = 1;
         }
         
-        return help[t.length()];
+        for (int i = 1; i < s.length() + 1; i++) {
+            int pre = dp[0];
+            for (int j = 1; j < t.length() + 1; j++) {
+                int temp = dp[j];
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[j] = pre + dp[j];
+                }
+                pre = temp;
+            }
+        }
+        return dp[t.length()];
     }
 }
