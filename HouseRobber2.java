@@ -65,3 +65,26 @@ public class Solution {
         return result[0][nums.length - 1];
     }
 }
+
+
+public class Solution {
+    public int rob(int[] nums) {
+        if (nums.length < 1) {
+            return 0;
+        }
+        return Math.max(help(nums, 0, nums.length - 2), nums[nums.length - 1] + help(nums, 1, nums.length - 3));
+    }
+    
+    private int help(int[] nums, int s, int e) {
+        int rob = 0;
+        int notRob = 0;
+        int result = 0;
+        for (int i = s; i <= e; i++) {
+            int temp = rob;
+            rob = notRob + nums[i];
+            notRob = Math.max(notRob, temp);
+            result = Math.max(result, Math.max(rob, notRob));
+        }
+        return result;
+    }
+}
