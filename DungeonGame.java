@@ -50,3 +50,49 @@ public class Solution {
 
     }
 }
+
+public class Solution {
+    public int calculateMinimumHP(int[][] dungeon) {
+        if (dungeon.length == 0) {
+            return 0;
+        }
+        int[][] dp = new int[dungeon.length + 1][dungeon[0].length + 1];
+        
+        for (int i = dungeon.length - 1; i >= 0; i--) {
+            for (int j = dungeon[0].length - 1; j >= 0; j--) {
+                int min;
+                if (dp[i + 1][j] == 0 || dp[i][j + 1] == 0) {
+                    min = Math.max(dp[i + 1][j], dp[i][j + 1]);
+                } else {
+                    min = Math.min(dp[i + 1][j], dp[i][j + 1]);
+                }
+                dp[i][j] = Math.max(Math.max(min, 1) - dungeon[i][j], 1);
+            }
+        }
+        
+        return dp[0][0];
+    }
+}
+
+public class Solution {
+    public int calculateMinimumHP(int[][] dungeon) {
+        if (dungeon.length == 0) {
+            return 0;
+        }
+        int[] dp = new int[dungeon.length + 1];
+        
+    for (int j = dungeon[0].length - 1; j >= 0; j--) {
+        for (int i = dungeon.length - 1; i >= 0; i--) {
+                int min;
+                if (dp[i + 1] == 0 || dp[i] == 0) {
+                    min = Math.max(dp[i + 1], dp[i]);
+                } else {
+                    min = Math.min(dp[i + 1], dp[i]);
+                }
+                dp[i] = Math.max(Math.max(min, 1) - dungeon[i][j], 1);
+            }
+        }
+        
+        return dp[0];
+    }
+}
