@@ -41,3 +41,29 @@ public class Solution {
         return help[0];
     }
 }
+
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices.length == 0) {
+            return 0;
+        }
+        int[] dp = new int[prices.length];
+        
+        for (int i = 1; i < dp.length; i++) {
+            int k = i;
+            dp[i] = dp[i - 1];
+            while (k >= 0) {
+                if (prices[i] > prices[k]) {
+                    int temp = prices[i] - prices[k];
+                    if (k - 2 >= 0) {
+                        temp += dp[k - 2];
+                    }
+                    dp[i] = Math.max(dp[i], temp);
+                }
+                k--;
+            }
+        }
+        
+        return dp[prices.length - 1];
+    }
+}
