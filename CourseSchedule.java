@@ -105,3 +105,60 @@ public class Solution {
         }
     }
 }
+
+
+public class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        Map<Integer, List<Integer>> graph = getGraph(prerequisites);
+        Set<Integer> visited = new HashSet<Integer>();
+        for (int i = 0; i < numCourses; i++) {
+            if (!visited.contains(i)) {
+                Set<Integer> localVisited = new HashSet<Integer>();
+                if (!dfs(i, graph, visited, localVisited)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    private boolean dfs(int i, Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> localVisited) {
+        if (localVisited.contains(i)) {
+            return false;
+        }
+        if (visited.contains(i)) {
+            return true;
+        }
+        
+        localVisited.add(i);
+        visited.add(i);
+        List<Integer> tos = graph.get(i);
+        if (tos != null) {
+            for (int n : tos) {
+                if (!dfs(n, graph, visited, localVisited)) {
+                    return false;
+                }
+            }
+        }
+        localVisited.remove(i);
+
+        return true;
+    }
+    
+    private Map<Integer, List<Integer>> getGraph(int[][] prerequisites) {
+        Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        for (int i = 0; i < prerequisites.length; i++) {
+            int from = prerequisites[i][1];
+            int to = prerequisites[i][0];
+            
+            List<Integer> tos = map.get(from);
+            if (tos == null) {
+                tos = new ArrayList<Integer>();
+                map.put(from, tos);
+            }
+            tos.add(to);
+        }
+        
+        return map;
+    }
+}
