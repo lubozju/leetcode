@@ -55,3 +55,35 @@ public class Solution {
         return curNode;
     }
 }
+
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (node == null) {
+            return node;
+        }
+        
+        Deque<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
+        Map<Integer, UndirectedGraphNode> map = new HashMap<Integer, UndirectedGraphNode>();
+        
+        UndirectedGraphNode result = new UndirectedGraphNode(node.label);
+        map.put(node.label, result);
+        
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode orgNode = queue.poll();
+            UndirectedGraphNode curNode = map.get(orgNode.label);
+            for (UndirectedGraphNode neighbor : orgNode.neighbors) {
+                if (map.containsKey(neighbor.label)) {
+                    curNode.neighbors.add(map.get(neighbor.label));
+                } else {
+                    UndirectedGraphNode child = new UndirectedGraphNode(neighbor.label);
+                    map.put(neighbor.label, child);
+                    curNode.neighbors.add(child);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        
+        return result;
+    }
+}
