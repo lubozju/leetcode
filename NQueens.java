@@ -68,3 +68,53 @@ public class Solution {
         return true;
     }
 }
+
+
+public class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> result = new ArrayList<List<String>>();
+        int[] tag = new int[n];
+        dfs(0, tag, n, result);
+        return result;
+    }
+    
+    private void dfs(int index, int[] tag, int n, List<List<String>> result) {
+        if (index == n) {
+            result.add(convert(tag));
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (validate(index, i, tag)) {
+                tag[index] = i;
+                dfs(index + 1, tag, n, result);
+            }
+        }
+    }
+    
+    private boolean validate(int index, int i, int[] tag) {
+        // vertical
+        for (int j = 0; j < index; j++) {
+            if (tag[j] == i) {
+                return false;
+            }
+        }
+        // 
+        for (int j = 0; j < index; j++) {
+            if (tag[j] == i + index - j || tag[j] == i + j - index) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private List<String> convert(int[] tag) {
+        List<String> result = new ArrayList<String>();
+        for (int i = 0; i < tag.length; i++) {
+            char[] chars = new char[tag.length];
+            Arrays.fill(chars, '.');
+            chars[tag[i]] = 'Q';
+            result.add(new String(chars));
+        }
+        return result;
+    }
+}
