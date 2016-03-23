@@ -54,3 +54,42 @@ public class Solution {
         return true;
     }
 }
+
+public class Solution {
+    public int totalNQueens(int n) {
+        int[] tag = new int[n];
+        return dfs(0, tag, n);
+    }
+    
+    private int dfs(int index, int[] tag, int n) {
+        if (index == n) {
+            return 1;
+        }
+        
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            if (validate(index, i, tag)) {
+                tag[index] = i;
+                result += dfs(index + 1, tag, n);
+            }
+        }
+        
+        return result;
+    }
+    
+     private boolean validate(int index, int i, int[] tag) {
+        // vertical
+        for (int j = 0; j < index; j++) {
+            if (tag[j] == i) {
+                return false;
+            }
+        }
+        // 
+        for (int j = 0; j < index; j++) {
+            if (tag[j] == i + index - j || tag[j] == i + j - index) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
