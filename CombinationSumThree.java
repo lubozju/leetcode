@@ -48,3 +48,29 @@ public class Solution {
         }
     }
 }
+
+public class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        
+        dfs(k, n, new ArrayList<Integer>(), result);
+        
+        return result;
+    }
+    
+    private void dfs(int k, int target, List<Integer> path, List<List<Integer>> result) {
+        if (path.size() == k) {
+            if (target == 0 && path.size() > 0) {
+                result.add(new ArrayList<Integer>(path));
+            }
+            return;
+        }
+        
+        for (int i = path.size() == 0 ? 1 : path.get(path.size() - 1) + 1; i <= 9 && i <= target; i++) {
+            path.add(i);
+            dfs(k, target - i, path, result);
+            path.remove(path.size() - 1);
+        }
+    }
+}
