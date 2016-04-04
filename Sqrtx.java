@@ -29,4 +29,24 @@ public class Solution {
         return left;
         
     }
+
+    public class Solution {
+    public int mySqrt(int x) {
+        if (x <= 1) {
+            return x;
+        }
+        return bst(0, x, x);
+    }
+    // x * x <= sqrt (x + 1) * (x + 1) > sqrt
+    private int bst(int min, int max, int target) {
+        while (min + 1 < max) {
+            int mid = min + (max - min) / 2;
+            if (target / mid < mid) {
+                max = mid;
+            } else if (target / mid >= mid) {
+                min = mid;
+            }
+        }
+        return min;
+    }
 }
