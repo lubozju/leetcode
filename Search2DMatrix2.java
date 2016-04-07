@@ -60,3 +60,46 @@ public class Solution {
         return result;
     }
 }
+
+public class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        return help(matrix, 0, 0, matrix.length - 1, matrix[0].length - 1, target);
+    }
+    
+    private boolean help(int[][] matrix, int topx, int topy, int botx, int boty, int target) {
+            if (topx > botx || topy > boty) {
+                return false;
+            }
+            if (target < matrix[topx][topy] || target > matrix[botx][boty]) {
+                return false;
+            }
+            int midx = topx + (botx - topx) / 2;
+            int midy = topy + (boty - topy) / 2;
+            if (matrix[midx][midy] == target) {
+                return true;
+            }
+            if (matrix[midx][midy] < target) {
+                return help(matrix, topx, midy + 1, midx, boty, target) || help(matrix, midx + 1, topy, botx, midy, target) || help(matrix, midx + 1, midy + 1, botx, boty, target);
+            }
+            return help(matrix, topx, midy, midx - 1, boty, target) || help(matrix, midx, topy, botx, midy - 1, target) || help(matrix, topx, topy, midx - 1, midy - 1, target);
+    }
+}
+
+public class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int x = 0;
+        int y = matrix[0].length - 1;
+        
+        while (x < matrix.length && y >= 0) {
+            if (matrix[x][y] == target) {
+                return true;
+            }
+            if (matrix[x][y] < target) {
+                x++;
+            } else {
+                y--;
+            }
+        }
+        return false;
+    }
+}
