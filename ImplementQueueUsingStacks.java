@@ -21,23 +21,16 @@ class MyQueue {
 
     // Removes the element from in front of queue.
     public void pop() {
-        if (!out.isEmpty()) {
-            out.pop();
-            return;
-        }
-        while (!in.isEmpty()) {
-            out.push(in.pop());
-        }
+        peek();
         out.pop();
     }
 
     // Get the front element.
     public int peek() {
-        if (!out.isEmpty()) {
-            return out.peek();
-        }
-        while (!in.isEmpty()) {
-            out.push(in.pop());
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) {
+                out.push(in.pop());
+            }
         }
         return out.peek();
     }
