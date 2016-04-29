@@ -51,3 +51,40 @@ public class Solution {
         return result;
     }
 }
+
+
+public class Solution {
+    public int calculate(String s) {
+        int result = 0;
+        int sign = 1;
+        int cur = 0;
+        Deque<Integer> stack = new LinkedList<Integer>();
+        
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                cur = cur * 10 + Character.getNumericValue(c);
+            } else if (c == '+' || c == '-') {
+                result += sign * cur;
+                cur = 0;
+                if (c == '+') {
+                    sign = 1;
+                } else {
+                    sign = -1;
+                }
+            } else if (c == '(') {
+                stack.push(result);
+                stack.push(sign);
+                result = 0;
+                sign = 1;
+            } else if (c == ')') {
+                result += sign * cur;
+                cur = result;
+                sign = stack.pop();
+                result = stack.pop();
+            }
+        }
+        result += sign * cur;
+        return result;
+    }
+}
