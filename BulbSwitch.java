@@ -22,6 +22,8 @@ So you should return 1, because there is only one bulb is on.
 // ...
 // 9 -> 3
 // 
+
+// only sqrt number is toggled odd times result at on. The problem is equalvant to find the number square number <= n
 public class Solution {
     public int bulbSwitch(int n) {
         return (int) (Math.sqrt(n));
