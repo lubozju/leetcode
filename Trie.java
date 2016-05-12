@@ -7,22 +7,11 @@ You may assume that all inputs are consist of lowercase letters a-z.
 
 class TrieNode {
     // Initialize your data structure here.
-    String value;
-    boolean isWord;
     TrieNode[] children;
+    boolean isWord;
     public TrieNode() {
-        value = "";
-        isWord = false;
         children = new TrieNode[26];
-    }
-    public void setValue(String value) {
-        this.value = value;
-    }
-    public void setIsWord(boolean isWord) {
-        this.isWord = isWord;
-    }
-    public boolean isWord() {
-        return isWord;
+        isWord = false;
     }
 }
 
@@ -35,42 +24,37 @@ public class Trie {
 
     // Inserts a word into the trie.
     public void insert(String word) {
-        TrieNode temp = root;
+        TrieNode node = root;
         for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (temp.children[c - 'a'] == null) {
-                temp.children[c - 'a'] = new TrieNode();
-                String value = temp.value + c;
-                temp.children[c - 'a'].setValue(value);
-            }
-            temp = temp.children[c - 'a'];
+            if (node.children[word.charAt(i) - 'a'] == null) {
+                node.children[word.charAt(i) - 'a'] = new TrieNode();
+            } 
+            node = node.children[word.charAt(i) - 'a'];
         }
-        temp.setIsWord(true);
+        node.isWord = true;
     }
 
     // Returns if the word is in the trie.
     public boolean search(String word) {
-        TrieNode temp = root;
+        TrieNode node = root;
         for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (temp.children[c - 'a'] == null) {
+            if (node.children[word.charAt(i) - 'a'] == null) {
                 return false;
             }
-            temp = temp.children[c - 'a'];
+            node = node.children[word.charAt(i) - 'a'];
         }
-        return temp.isWord();
+        return node.isWord;
     }
 
     // Returns if there is any word in the trie
     // that starts with the given prefix.
     public boolean startsWith(String prefix) {
-        TrieNode temp = root;
+        TrieNode node = root;
         for (int i = 0; i < prefix.length(); i++) {
-            char c = prefix.charAt(i);
-            if (temp.children[c - 'a'] == null) {
+            if (node.children[prefix.charAt(i) - 'a'] == null) {
                 return false;
             }
-            temp = temp.children[c - 'a'];
+            node = node.children[prefix.charAt(i) - 'a'];
         }
         return true;
     }
