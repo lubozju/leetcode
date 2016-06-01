@@ -14,58 +14,41 @@ Could you solve it in-place? Remember that the board needs to be updated at the 
 In this question, we represent the board using a 2D array. In principle, the board is infinite, which would cause problems when the active area encroaches the border of the array. How would you address these problems?
 */
 
+// 00 - the first 0 represents the next state and the last 0 represent the old state
+
 public class Solution {
     public void gameOfLife(int[][] board) {
-        int iMax = board.length;
-        int jMax = board[0].length;
-        
-        for (int i = 0; i < iMax; i++) {
-            for (int j = 0; j < jMax; j++) {
-                int liveNei = cntLiveNeighbors(board, i, j);
-                if (board[i][j] == 1) {
-                    if (liveNei < 2 || liveNei > 3) {
-                        board[i][j] = 101;
-                    } else {
-                        board[i][j] = 111;
-                    }
-                } else {
-                    if (liveNei == 3) {
-                        board[i][j] = 110;
-                    } else {
-                        board[i][j] = 100;
-                    }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                int numLiveNei = calLiveNei(board, i, j);
+                if (board[i][j] == 0 && numLiveNei == 3) {
+                    board[i][j] = 2;
+                } else if (board[i][j] == 1 && numLiveNei >= 2 && numLiveNei <= 3) {
+                    board[i][j] = 3;
                 }
             }
         }
-        for (int i = 0; i < iMax; i++) {
-            for (int j = 0; j < jMax; j++) {
-                board[i][j] = board[i][j] % 100 > 9 ? 1 : 0;
+        
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = board[i][j] / 2;
             }
         }
-        
     }
     
-    private int cntLiveNeighbors(int[][] board, int i, int j) {
-        int iMax = board.length;
-        int jMax = board[0].length;
+    private int calLiveNei(int[][] board, int i, int j) {
         int count = 0;
-        for (int m = -1; m <= 1 ; m++) {
+        for (int m = -1; m <= 1; m++) {
             for (int n = -1; n <= 1; n++) {
-                if (m == 0 && n == 0) {
-                    continue;
-                }
-                
-                int x = i + m;
-                int y = j + n;
-                
-                if (x >= 0 && x < iMax && y >= 0 && y < jMax) {
-                    if (board[x][y] % 10 == 1) {
-                        count++;
+                if (m + i >= 0 && m + i < board.length
+                && n + j >= 0 && n + j < board[0].length) {
+                    if (m == 0 && n == 0) {
+                        continue;
                     }
-                } 
+                    count += board[m + i][n + j] % 2;
+                }
             }
         }
-        
         return count;
     }
 }
