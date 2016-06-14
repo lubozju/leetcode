@@ -48,3 +48,31 @@ public class Solution {
         return result;
     }
 }
+
+public class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums.length == 0) {
+            return nums;
+        }
+        Deque<Integer> deque = new LinkedList<Integer>();
+        
+        int[] result = new int[nums.length - k + 1];
+        int i = 0;
+        for (int j = 0; j < nums.length; j++) {
+            // deque should be non increasing
+            while (deque.size() > 0 && deque.getLast() < nums[j]) {
+                deque.removeLast();
+            }
+            deque.addLast(nums[j]);
+            
+            if (j >= k - 1) {
+                result[i++] = deque.getFirst();
+                if (nums[j - k + 1] == deque.getFirst()) {
+                    deque.removeFirst();
+                }
+            }
+        }
+        
+        return result;
+    }
+}
