@@ -31,3 +31,37 @@ public class Solution {
         return start + "->" + end;
     }
 }
+
+public class Solution {
+    // Time: O(n)
+    // Space: O(1)
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result = new ArrayList<String>();
+        if (nums.length == 0) {
+            return result;
+        }
+        int low = nums[0];
+        int high = low;
+        
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i - 1] + 1) {
+                high = nums[i];
+            } else {
+                if (low == high) {
+                    result.add(Integer.toString(low));
+                } else {
+                    result.add(low + "->" + high);
+                }
+                low = nums[i];
+                high = low;
+            }
+        }
+        
+        if (low == high) {
+            result.add(Integer.toString(low));
+        } else {
+            result.add(low + "->" + high);
+        }
+        return result;
+    }
+}
