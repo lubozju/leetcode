@@ -30,3 +30,23 @@ public class Solution {
         return (C - A) * (D - B) + (G - E) * (H - F) - common;
     }
 }
+
+
+public class Solution {
+    // Time: O(1)
+    // Time: O(1)
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int x = Math.max(A, E);
+        int y = Math.max(B, F);
+        int m = Math.min(C, G);
+        int n = Math.min(D, H);
+        return getArea(A, B, C, D) + getArea(E, F, G, H) - getArea(x, y, m, n); 
+    }
+    
+    private int getArea(int A, int B, int C, int D) {
+        if (C >= A && D >= B) {
+            return (C - A) * (D - B);
+        }
+        return 0;
+    }
+}
