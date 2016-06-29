@@ -51,3 +51,66 @@ public class Solution {
         return 0;
     }
 }
+
+public class Solution {
+    // Time O(n)
+    // Space O(n)
+    public int compareVersion(String version1, String version2) {
+        String[] array1 = version1.split("\\.");
+        String[] array2 = version2.split("\\.");
+        
+        int i = 0;
+        while (i < array1.length && i < array2.length) {
+            int temp = compare(array1[i], array2[i]);
+            if (temp != 0) {
+                return temp;
+            }
+            i++;
+        }
+        while (i < array1.length) {
+            if (processing(array1[i]).length() != 0) {
+                return 1;
+            }
+            i++;
+        }
+        while (i < array2.length) {
+            if (processing(array2[i]).length() != 0) {
+                return -1;
+            }
+            i++;
+        }
+        
+        return 0;
+    }
+    
+    private int compare(String word1, String word2) {
+        word1 = processing(word1);
+        word2 = processing(word2);
+        if (word1.length() == word2.length()) {
+            if (word1.compareTo(word2) == 0) {
+                return 0;
+            }
+            if (word1.compareTo(word2) > 0) {
+                return 1;
+            }
+            return -1;
+        }
+        if (word1.length() > word2.length()) {
+            return 1;
+        }
+        return -1;
+    }
+    
+    private String processing(String word) {
+        int i = 0;
+        while (i < word.length()) {
+            if (word.charAt(i) == '0') {
+                i++;
+            } else {
+                break;
+            }
+        }
+        return word.substring(i);
+    }
+    
+}
