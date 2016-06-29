@@ -21,3 +21,19 @@ public class Solution {
         return result;
     }
 }
+
+public class Solution {
+    // Time O(1)
+    // Space O(1)
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int result = 0;
+        int i = 0;
+        while (i < 32) {
+            result = result * 2 + (n & 1);
+            n = n >> 1;
+            i++;
+        }
+        return result;
+    }
+}
