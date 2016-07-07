@@ -15,6 +15,8 @@ Assume you have Uk, the kth ugly number. Then Uk+1 must be Min(L1 * 2, L2 * 3, L
 */
 
 public class Solution {
+        // Time O(n)
+    // Space O(n)
     public int nthUglyNumber(int n) {
         int[] dp = new int[n];
         dp[0] = 1;
