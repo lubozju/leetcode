@@ -48,3 +48,36 @@ public class Solution {
         }
     }
 }
+
+public class Solution {
+    // Time O(n)
+    // Space O(1)
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 1;
+        
+        while (i >= 1 && nums[i] <= nums[i - 1]){
+            i--;
+        }
+        
+        reverse(nums, i, nums.length - 1);
+        if (i > 0) {
+            int j = i;
+            while (nums[i - 1] >= nums[j]) {
+                j++;
+            }
+            int temp = nums[i - 1];
+            nums[i - 1] = nums[j];
+            nums[j] = temp;
+        }
+    }
+    
+    private void reverse(int[] nums, int left, int right) {
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
+        }
+    }
+}
