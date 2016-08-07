@@ -35,3 +35,24 @@ public class Solution {
         return false;
     }
 }
+
+public class Solution {
+    // Time O(log2(n))
+    // Space O(1)
+    public boolean isUgly(int num) {
+        // check num < 1
+        if (num < 1) {
+            return false;
+        }
+        while (num % 2 == 0) {
+            num = num / 2;
+        }
+        while (num % 3 == 0) {
+            num = num / 3;
+        }
+        while (num % 5 == 0) {
+            num = num / 5;
+        }
+        return num == 1;
+    }
+}
