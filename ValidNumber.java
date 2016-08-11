@@ -11,6 +11,8 @@ Note: It is intended for the problem statement to be ambiguous. You should gathe
 */
 
 public class Solution {
+	// Time O(n)
+	// Space O(1)
     public boolean isNumber(String s) {
         boolean hasDot = false;
         boolean hasNumber = false;
