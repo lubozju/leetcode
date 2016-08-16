@@ -43,3 +43,38 @@ public class Solution {
         return result - minus;
     }
 }
+
+public class Solution {
+    // Time O(n)
+    // Space O(n)
+    public int trap(int[] height) {
+        if (height.length == 0) {
+            return 0;
+        }
+        int toBeSub = 0;
+        int total = 0;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        for (int i = 1; i < height.length; i++) {
+            while (!stack.empty() && height[i] >= height[stack.peek()]) {
+                int index = stack.pop();
+                int water = height[index] * (i - index - 1);
+                total += water;
+                if (!stack.empty()) {
+                    toBeSub += height[index];
+                    // toBeSub is the removed height and the water bounded by that height
+                    toBeSub += water;
+                }
+            }
+            stack.push(i);
+        }
+        int index = stack.pop();
+        while (!stack.empty()) {
+            total += height[index] * (index - stack.peek() - 1);
+            index = stack.pop();
+        }
+        total -= toBeSub;
+        
+        return total;
+    }
+}
