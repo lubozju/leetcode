@@ -78,3 +78,28 @@ public class Solution {
         return total;
     }
 }
+
+
+    // Time O(n)
+    // Space O(1)
+    public int trap(int[] height) {
+        int total = 0;
+        int maxLeft = 0;
+        int maxRight = 0;
+        int left = 0;
+        int right = height.length - 1;
+        
+        while (left < right) {
+            maxLeft = Math.max(height[left], maxLeft);
+            maxRight = Math.max(height[right], maxRight);
+            
+            if (maxLeft <= maxRight) {
+                total += maxLeft - height[left];
+                left++;
+            } else {
+                total += maxRight - height[right];
+                right--;
+            }
+        }
+        return total;
+    }
