@@ -50,3 +50,30 @@ public class Solution {
         }
     }
 }
+
+
+public class Solution {
+    public void moveZeroes(int[] nums) {
+        int i = 0;
+        while (i < nums.length && nums[i] != 0) {
+            i++;
+        }
+        
+        int index = i;
+        while (i < nums.length) {
+            if (nums[i] != 0) {
+                swap(nums, i, index);
+                index++;
+            }
+            i++;
+        }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        if (i != j) {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+    }
+}
