@@ -118,3 +118,79 @@ public class Solution {
         return sb;
     }
 }
+
+
+public class Solution {
+    public String numberToWords(int num) {
+        if (num == 0) {
+            return "Zero";
+        }
+        
+        int level = 0;
+        String[] units = {"", "Thousand", "Million", "Billion"};
+        String[] partialResults = new String[4];
+        String[] zeroNineteen = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+            "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+        };
+        String[] twNinty = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+        while (num > 0) {
+            int lastThree = num % 1000;
+            num = num / 1000;
+            partialResults[level++] = help(lastThree, zeroNineteen, twNinty);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for (int i = 3; i >= 0; i--) {
+            if (partialResults[i] == null) {
+                continue;
+            }
+            if (sb.length() > 0) {
+                sb.append(" ");
+            }
+            sb.append(partialResults[i]);
+            if (i > 0) {
+                sb.append(" ");
+                sb.append(units[i]);
+            }
+        }
+        return sb.toString();
+    }
+    
+    private String help(int num, String[] zeroNineteen, String[] twNinty) {
+        if (num == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        int h = num / 100;
+        if (h > 0) {
+            sb.append(zeroNineteen[h]);
+            sb.append(" ");
+            sb.append("Hundred"); 
+        }
+        int lastTwo = num % 100;
+        if (lastTwo == 0) {
+            return sb.toString();
+        }
+        if (lastTwo < 20) {
+            if (sb.length() > 0) {
+                sb.append(" ");
+            }
+            sb.append(zeroNineteen[lastTwo]);
+        } else {
+            int t = lastTwo / 10;
+            if (sb.length() > 0) {
+                sb.append(" ");
+            }
+            sb.append(twNinty[t]);
+            int d = lastTwo % 10;
+            if (d != 0) {
+                if (sb.length() > 0) {
+                    sb.append(" ");
+                }   
+                sb.append(zeroNineteen[d]);
+            }
+        }
+        return sb.toString();
+    }
+}
