@@ -114,3 +114,58 @@ public class Solution {
         }
     }
 }
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    // Time O(n)
+    // Space O(n)
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Integer leftBound = getLeftBound(root, 0);
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> levels = new LinkedList<>();
+        if (root != null) {
+            queue.add(root);
+            levels.add(-leftBound);
+        }
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            Integer level = levels.poll();
+            while (result.size() <= level) {
+                result.add(new ArrayList<Integer>());
+            }
+            List<Integer> list = result.get(level);
+            list.add(node.val);
+            if (node.left != null) {
+                queue.add(node.left);
+                levels.add(level - 1);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+                levels.add(level + 1);
+            }
+        }
+        return result;
+    }
+    
+    private Integer getLeftBound(TreeNode root, int level) {
+        if (root == null) {
+            return null;
+        }
+        Integer left = getLeftBound(root.left, level - 1);
+        Integer right = getLeftBound(root.right, level + 1);
+        
+        return Math.min(left == null ? level : left, right == null ? level : right);
+    }
+}
