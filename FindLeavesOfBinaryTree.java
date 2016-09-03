@@ -74,3 +74,27 @@ public class Solution {
         return result;
     }
 }
+
+public class Solution {
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        
+        findHeight(root, result);
+        return result;
+    }
+    
+    private int findHeight(TreeNode node, List<List<Integer>> result) {
+        if (node == null) {
+            return -1;
+        }
+        
+        int height = 1 + Math.max(findHeight(node.left, result), findHeight(node.right, result));
+        
+        if (result.size() == height) {
+            result.add(new ArrayList<>());
+        }
+        List<Integer> list  = result.get(height);
+        list.add(node.val);
+        return height;
+    }
+}
