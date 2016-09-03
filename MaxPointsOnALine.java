@@ -54,3 +54,36 @@ public class Solution {
         }
         return result;
     }
+
+public class Solution {
+    public int maxPoints(Point[] points) {
+        if (points.length <= 2) {
+            return points.length;
+        }
+        int max = 0;
+        for (int i = 0; i < points.length - 1; i++) {
+            int numOfSamePoints = 0;
+            int localMax = 0;
+            Map<Double, Integer> map = new HashMap<>();
+            for (int j = i + 1; j < points.length; j++) {
+                if (points[i].y == points[j].y && points[i].x == points[j].x) {
+                    numOfSamePoints++;
+                } else {
+                    Double slope = ((double)(points[i].y - points[j].y)) / (points[i].x - points[j].x);
+                    if (points[i].y == points[j].y || points[i].x == points[j].x) {
+                        slope = Math.abs(slope);
+                    }
+                    Integer count = map.get(slope);
+                    if (count == null) {
+                        map.put(slope, 1);
+                    } else {
+                        map.put(slope, count + 1);
+                    }
+                    localMax = Math.max(localMax, map.get(slope));
+                }
+            }
+            max = Math.max(max, 1 + numOfSamePoints + localMax);
+        }
+        return max;
+    }
+}    
